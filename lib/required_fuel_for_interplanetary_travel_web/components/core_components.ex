@@ -457,7 +457,14 @@ defmodule RequiredFuelForInterplanetaryTravelWeb.CoreComponents do
     # with our gettext backend as first argument. Translations are
     # available in the errors.po file (as we use the "errors" domain).
     if count = opts[:count] do
-      Gettext.dngettext(RequiredFuelForInterplanetaryTravelWeb.Gettext, "errors", msg, msg, count, opts)
+      Gettext.dngettext(
+        RequiredFuelForInterplanetaryTravelWeb.Gettext,
+        "errors",
+        msg,
+        msg,
+        count,
+        opts
+      )
     else
       Gettext.dgettext(RequiredFuelForInterplanetaryTravelWeb.Gettext, "errors", msg, opts)
     end

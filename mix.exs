@@ -65,7 +65,9 @@ defmodule RequiredFuelForInterplanetaryTravel.MixProject do
       {:gettext, "~> 0.26"},
       {:jason, "~> 1.2"},
       {:dns_cluster, "~> 0.2.0"},
-      {:bandit, "~> 1.5"}
+      {:bandit, "~> 1.5"},
+      # Arbitrary precision decimal arithmetic
+      {:decimal, "~> 3.1"}
     ]
   end
 
@@ -80,9 +82,13 @@ defmodule RequiredFuelForInterplanetaryTravel.MixProject do
       setup: ["deps.get", "ecto.setup", "assets.setup", "assets.build"],
       "ecto.setup": ["ecto.create", "ecto.migrate", "run priv/repo/seeds.exs"],
       "ecto.reset": ["ecto.drop", "ecto.setup"],
-      test: ["ecto.create --quiet", "ecto.migrate --quiet", "test"],
+      test: ["test"],
       "assets.setup": ["tailwind.install --if-missing", "esbuild.install --if-missing"],
-      "assets.build": ["compile", "tailwind required_fuel_for_interplanetary_travel", "esbuild required_fuel_for_interplanetary_travel"],
+      "assets.build": [
+        "compile",
+        "tailwind required_fuel_for_interplanetary_travel",
+        "esbuild required_fuel_for_interplanetary_travel"
+      ],
       "assets.deploy": [
         "tailwind required_fuel_for_interplanetary_travel --minify",
         "esbuild required_fuel_for_interplanetary_travel --minify",

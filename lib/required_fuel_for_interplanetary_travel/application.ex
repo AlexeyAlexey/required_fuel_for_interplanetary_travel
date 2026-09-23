@@ -10,7 +10,10 @@ defmodule RequiredFuelForInterplanetaryTravel.Application do
     children = [
       RequiredFuelForInterplanetaryTravelWeb.Telemetry,
       # RequiredFuelForInterplanetaryTravel.Repo,
-      {DNSCluster, query: Application.get_env(:required_fuel_for_interplanetary_travel, :dns_cluster_query) || :ignore},
+      {DNSCluster,
+       query:
+         Application.get_env(:required_fuel_for_interplanetary_travel, :dns_cluster_query) ||
+           :ignore},
       {Phoenix.PubSub, name: RequiredFuelForInterplanetaryTravel.PubSub},
       # Start a worker by calling: RequiredFuelForInterplanetaryTravel.Worker.start_link(arg)
       # {RequiredFuelForInterplanetaryTravel.Worker, arg},

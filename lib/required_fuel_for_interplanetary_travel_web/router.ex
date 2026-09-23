@@ -17,7 +17,7 @@ defmodule RequiredFuelForInterplanetaryTravelWeb.Router do
   scope "/", RequiredFuelForInterplanetaryTravelWeb do
     pipe_through :browser
 
-    get "/", PageController, :home
+    live "/", FuelCalculatorLive
   end
 
   # Other scopes may use custom stacks.
