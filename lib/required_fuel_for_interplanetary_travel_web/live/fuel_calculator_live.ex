@@ -33,7 +33,7 @@ defmodule RequiredFuelForInterplanetaryTravelWeb.FuelCalculatorLive do
           |> assign(:mass_form, to_form(params, as: :spacecraft, action: :validate))
 
         {:error, message} ->
-          message = if String.trim(mass) == "", do: "can't be blank", else: message
+          message = if String.trim(mass) == "", do: "is required", else: message
 
           socket
           |> assign(:mass, nil)
@@ -138,7 +138,12 @@ defmodule RequiredFuelForInterplanetaryTravelWeb.FuelCalculatorLive do
       <div class="card bg-base-200 shadow-sm">
         <div class="card-body">
           <h2 class="card-title text-base">Spacecraft</h2>
-          <.form for={@mass_form} id="mass-form" phx-change="validate_mass">
+          <.form
+            for={@mass_form}
+            id="mass-form"
+            phx-change="validate_mass"
+            phx-submit="validate_mass"
+          >
             <.input
               field={@mass_form[:mass]}
               type="text"

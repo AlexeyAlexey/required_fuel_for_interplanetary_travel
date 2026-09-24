@@ -26,6 +26,36 @@ defmodule RequiredFuelForInterplanetaryTravelWeb.FuelCalculatorLiveTest do
       assert html =~ "must be a valid number"
     end
 
+    test "submitting the form (pressing enter) keeps the value and runs the calculation", %{
+      conn: conn
+    } do
+      {:ok, view, _html} = live(conn, ~p"/")
+
+      view
+      |> form("#step-form", step: %{action: "launch", celestial_object: "earth"})
+      |> render_submit()
+
+      html =
+        view
+        |> form("#mass-form", spacecraft: %{mass: "28801"})
+        |> render_submit()
+
+      assert html =~ "28801"
+      assert has_element?(view, "#fuel-result")
+    end
+
+    test "submitting the form with an empty mass shows a required error", %{conn: conn} do
+      {:ok, view, _html} = live(conn, ~p"/")
+
+      html =
+        view
+        |> form("#mass-form", spacecraft: %{mass: ""})
+        |> render_submit()
+
+      assert html =~ "is required"
+      refute has_element?(view, "#fuel-result")
+    end
+
     test "shows an error for non-positive mass", %{conn: conn} do
       {:ok, view, _html} = live(conn, ~p"/")
 

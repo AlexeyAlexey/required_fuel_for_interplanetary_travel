@@ -19,6 +19,29 @@ defmodule RequiredFuelForInterplanetaryTravel.FuelCalculationTest do
       assert Decimal.eq?(fuel, 51898)
     end
 
+    test "Mars mission: launch earth, land mars, launch mars, land earth " <>
+           "with 14606 kg of equipment requires 33388 kg of fuel" do
+      route = [{:launch, "earth"}, {:land, "mars"}, {:launch, "mars"}, {:land, "earth"}]
+
+      assert {:ok, fuel} = FuelCalculation.calculate(Decimal.new("14606"), route)
+      assert Decimal.eq?(fuel, 33388)
+    end
+
+    test "passenger ship mission: launch earth, land moon, launch moon, land mars, " <>
+           "launch mars, land earth with 75432 kg of equipment requires 212161 kg of fuel" do
+      route = [
+        {:launch, "earth"},
+        {:land, "moon"},
+        {:launch, "moon"},
+        {:land, "mars"},
+        {:launch, "mars"},
+        {:land, "earth"}
+      ]
+
+      assert {:ok, fuel} = FuelCalculation.calculate(Decimal.new("75432"), route)
+      assert Decimal.eq?(fuel, 212_161)
+    end
+
     test "accepts a custom formulas struct" do
       route = [{:launch, "earth"}, {:land, "moon"}, {:launch, "moon"}, {:land, "earth"}]
 
